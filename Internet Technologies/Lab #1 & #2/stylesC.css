@@ -1,0 +1,14 @@
+p {
+    font-family: 'Frank Ruhl Libre', serif;
+}
+table, th, td {
+    border: 1px solid #808000;
+}
+
+a {
+    text-decoration: none;
+}
+
+ul {
+    list-style-type:  upper-roman;
+}

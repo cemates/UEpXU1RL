@@ -1,0 +1,50 @@
+body{
+    margin: 0;
+    padding: 0;
+}
+.container{
+    width: 960px;
+    margin: 0px auto 0 auto;
+    border: 2px dashed #000;
+    background-color: #FFF;
+    background: url('oscar.png') no-repeat right;
+    background-size: 300px;
+    background-position: 800px;
+    }
+.banner{
+    width: 900px ;
+    margin-right: auto;
+    margin-left: 110px;
+    padding-top: 20px;
+}
+.article{
+width: 90%;
+margin: auto;
+}
+.article .header{
+     background: url('film.png') no-repeat left center;
+     background-size: 25px;
+     border-left: 4px solid red;
+     border-bottom: 1px solid red;
+}
+.article .header h1{
+    margin: 10px 0 0 30px;
+    
+}
+.article .content{
+    width: 91%;
+    background-color: antiquewhite;
+    margin: 10px auto 0 auto;
+    border: 2px dashed #000;
+}
+
+.article .content{
+    padding: 0px 5px 0px 5px;
+}
+.footer{
+    width: 90%;
+    margin: auto;
+}
+a {
+    text-decoration: none;
+}

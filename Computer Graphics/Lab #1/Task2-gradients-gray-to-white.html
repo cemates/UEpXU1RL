@@ -1,0 +1,22 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/processing.js/1.6.4/processing.min.js"></script>
+
+<canvas id="mycanvas"></canvas>
+
+<script type="text/processing" data-processing-target="mycanvas">
+void setup() {
+	size(800, 600);
+    noLoop();
+
+}
+void draw() {  
+	background(0);
+    loadPixels();
+    
+    for(int y=0; y<height; y++) {
+   		for(int x=0; x<width; x++) {
+  			set(x,y, color(x/width*256));
+        }
+    }
+    updatePixels();
+}
+</script>

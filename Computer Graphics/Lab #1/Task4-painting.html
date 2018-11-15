@@ -1,0 +1,53 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/processing.js/1.6.4/processing.min.js"></script>
+
+<canvas id="mycanvas"></canvas>
+
+<script type="text/processing" data-processing-target="mycanvas">
+void setup() {
+	size(800, 600);
+    noLoop();
+
+}
+void draw() {  
+	background(0);
+    loadPixels();
+    
+    dx = x - (width/2);
+    dy = y - (height/2);
+    d = sqrt(dx*dx + dy*dy);
+    
+    for(int y=0; y<height; y++) {
+   		for(int x=0; x<width; x++) {
+        	pixels[y*width+x] = color(200,191,231);
+       	}
+    }
+
+    for(int y=0; y<height; y++) {
+   		for(int x=0; x<width; x++) {
+        	if(y >= 400)
+        		pixels[y*width+x] = color(0,100,0);
+       	}
+    }
+    
+    for(int y=0; y<1000; y++) {
+   		a = int(random(400,600));
+        b = int(random(0,800));
+        pixels[a*width+b] = color(int(random(0,255)),int(random(0,255)),int(random(0,255)));
+    }
+    
+    for(int y=0; y<height; y++) {
+   		for(int x=0; x<width; x++) {
+        	if(y >= 200 && y <= 400 && x >= (width/2)-200 && x <= (width/2) + 200)
+        		pixels[y*width+x] = color(100,50,30);
+       	}
+    }
+    
+    for(int y=100,w=0; y<200; y++,w+=3) {
+    	for(x = width/2 - w; x < width/2 + w; x++) {
+        	pixels[y*width+x] = color(255,100,100);
+        }
+    }
+    
+    updatePixels();
+}
+</script>
