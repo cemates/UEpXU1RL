@@ -1,0 +1,15 @@
+c:\users\rahele\documents\visual studio 2012\Projects\BYT45\BYT45\bin\Debug\BYT45.exe.config
+c:\users\rahele\documents\visual studio 2012\Projects\BYT45\BYT45\bin\Debug\BYT45.exe
+c:\users\rahele\documents\visual studio 2012\Projects\BYT45\BYT45\bin\Debug\BYT45.pdb
+c:\users\rahele\documents\visual studio 2012\Projects\BYT45\BYT45\obj\Debug\BYT45.exe
+c:\users\rahele\documents\visual studio 2012\Projects\BYT45\BYT45\obj\Debug\BYT45.pdb
+c:\users\rahele\documents\visual studio 2012\Projects\BYT45\BYT45\obj\Debug\BYT45.csprojResolveAssemblyReference.cache
+\\Mac\Home\Downloads\wetransfer-75c771\BYT45\BYT45\bin\Debug\BYT45.exe.config
+\\Mac\Home\Downloads\wetransfer-75c771\BYT45\BYT45\obj\Debug\BYT45.exe
+\\Mac\Home\Downloads\wetransfer-75c771\BYT45\BYT45\obj\Debug\BYT45.pdb
+\\Mac\Home\Downloads\wetransfer-75c771\BYT45\BYT45\bin\Debug\BYT45.exe
+\\Mac\Home\Downloads\wetransfer-75c771\BYT45\BYT45\bin\Debug\BYT45.pdb
+\\Mac\Home\Downloads\wetransfer-75c771\BYT45\BYT45\obj\Debug\BYT45.csprojResolveAssemblyReference.cache
+C:\Users\CemAtes\Desktop\BYT45\bin\Debug\BYT45.exe.config
+C:\Users\CemAtes\Desktop\BYT45\obj\Debug\BYT45.exe
+C:\Users\CemAtes\Desktop\BYT45\obj\Debug\BYT45.pdb
