@@ -1,0 +1,37 @@
+<html>
+    <head>
+    <title>6a</title>
+    </head>
+<body>
+    <!-- Write a JS function that will convert temperatures between Celsius and Fahrenheit scales (https://en.wikipedia.org/wiki/Fahrenheit) , taking input from a form on the page and printing output to a field on the same page.-->
+Celcius:    <input id="c">
+Fahrenheit: <input id="f">
+    <script type="text/javascript">
+        
+var $f = document.getElementById("f");
+var $c = document.getElementById("c");
+
+function FC_CF() {
+
+  var temp;  
+  var $targ; 
+
+  if (this.id === "c") { 
+    $targ = $f;          
+    temp = (this.value * 9 / 5) + 32;  
+  } else {
+    $targ = $c;
+    temp = (this.value - 32) * 5 / 9;  
+  }
+
+  $targ.value = !isNaN(temp) ? parseFloat(temp.toFixed(1))  : "Err";
+
+
+}
+
+
+$f.oninput = FC_CF; 
+$c.oninput = FC_CF;
+    </script>
+
+</body></html>
