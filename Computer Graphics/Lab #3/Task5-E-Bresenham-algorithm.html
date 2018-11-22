@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Bresenham's line algorithm</title>
+    <style>
+        body {
+            background-color: #ccc;
+        }
+    </style>
+</head>
+
+<body>
+<script src="//cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.7/p5.js"></script>
+<script type="text/javascript">
+
+function setup() {
+  createCanvas(512,512);
+  background(255);
+  var x0=-1;
+  var y0=-1;
+  var x1=-1;
+  var y1=-1;
+}
+
+function mousePressed() {
+    x0=mouseX;
+    y0=mouseY;
+}
+
+function mouseDragged() {  
+    x1=mouseX;
+    y1=mouseY;  
+    background(255);
+    noStroke();
+    fill('red');
+    ellipse(x0-3,y0-3,6);
+    fill('green');  
+    ellipse(x1-3,y1-3,6);
+}
+
+function mouseReleased() {
+  background(255);
+  loadPixels();
+  draw_line();
+  updatePixels();
+}
+
+function set_pixel(xx, y, c) {
+    idx=(y*512+xx)*4;
+    pixels[idx]=c;
+    pixels[idx+1]=c;
+    pixels[idx+2]=c;
+    pixels[idx+3]=255;
+}
+function lowLine(a0,b0, a1,b1) {
+  dx = a1 - a0;
+  dy = b1 - b0;
+  yi = 1;
+  if(dy < 0){
+    yi = -1;
+    dy = -dy;
+  }
+  D = 2*dy - dx;
+  y = b0;
+
+  for(x = a0; x < a1; x++) {
+    set_pixel(x,y,200);
+    if(D > 0){
+       y = y + yi;
+       D = D - 2*dx;
+    }
+    D = D + 2*dy;
+  }
+}
+
+function highLine(a0,b0, a1,b1) {
+  dx = a1 - a0;
+  dy = b1 - b0;
+  xi = 1;
+  if(dx < 0){
+    xi = -1;
+    dx = -dx;
+  }
+  D = 2*dx - dy;
+  x = a0;
+
+  for(y = b0; y < b1; y++) {
+    set_pixel(x,y,200);
+    if(D > 0) {
+       x = x + xi;
+       D = D - 2*dy;
+    }
+    D = D + 2*dx;
+  }
+}
+
+function draw_line() {
+  if(abs(y1 - y0) < abs(x1 - x0)){
+    if(x0 > x1)
+      lowLine(x1, y1, x0, y0)
+    else {
+      lowLine(x0, y0, x1, y1)
+    }
+  }
+  else {
+    if(y0 > y1)
+      highLine(x1, y1, x0, y0);
+    else {
+      highLine(x0, y0, x1, y1);
+    }
+  }
+}
+</script></body>
+
+</html>
