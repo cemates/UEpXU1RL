@@ -1,0 +1,110 @@
+<style> body { background-color:#ccc; } </style>
+<script src="//cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.7/p5.js"></script>
+<body>
+<script type="text/javascript">
+
+var imgA;
+var imgB; 
+
+function setup() {
+    createCanvas(512,512);
+    background(255);  
+    imgA = createImage(512,512);
+    imgB = createImage(512,512);
+    imgA.loadPixels();
+    imgB.loadPixels();
+    var d = pixelDensity();
+    for(var i=0; i<512*512*4*d; i+=4) {
+      imgA.pixels[i]=240;
+      imgA.pixels[i+1]=250;
+      imgA.pixels[i+2]=240;
+      imgA.pixels[i+3]=255;
+      imgB.pixels[i]=240;
+      imgB.pixels[i+1]=240;
+      imgB.pixels[i+2]=250;
+      imgB.pixels[i+3]=255;
+    } 
+    imgA.updatePixels();
+    imgB.updatePixels();
+}
+
+function draw() {
+    if (!keyIsDown(32)) {
+      image(imgA,0,0); 
+      text('Image A',10,20);
+    } else {
+      image(imgB,0,0);
+      text('Image B',10,20);
+  }
+} 
+
+function makeVector(x,y) {
+	var vector = [x,y,1];
+    return vector;
+}
+
+function drawVector (img, vec) {
+	img.loadPixels();
+    var x = vec[0];
+    var y = vec[1];
+    img.set(x,y,0);
+    img.updatePixels();
+}
+
+function mouseDragged() {
+	var vector = makeVector(mouseX, mouseY);
+    drawVector(imgA, vector);
+    
+  //  var vector2 = transform(vector, identityMatrix());
+  //  var vector2 = transform(vector, shiftMatrix(20,10));
+  //  var vector2 = transform(vector, scaleMatrix(1.5,1.5));
+      var vector2 = transform(vector, rotateMatrix(90));
+    
+    drawVector(imgB, vector2);
+}
+
+function identityMatrix() {
+	var matrix = [ 	[1,0,0],
+    		      		[0,1,0],
+                  [0,0,1] ]
+	return matrix;                    
+}
+
+
+function shiftMatrix(tx, ty) {
+	var matrix = [ 	[1,0,tx],
+    				      [0,1,ty],
+                  [0,0,1] ]
+	return matrix;                    
+}
+
+
+function scaleMatrix(sx, sy) {
+	var matrix = [ 	[sx,0,0],
+    			      	[0,sy,0],
+                  [0,0,1] ]
+	return matrix;                    
+}
+
+function rotateMatrix(degrees) {
+	var rad = degrees/180 * Math.PI;
+  var cosR = Math.cos(rad);
+  var sinR = Math.sin(rad);
+	var matrix = [ 	[cosR,-sinR,0],
+    			      	[sinR,cosR,0],
+                  [0,0,1] ]
+	return matrix;                    
+}
+
+function transform(vector, matrix) {
+	var output = [0,0,0];
+	for (var i = 0; i < 3; i++) {
+    	for (var j = 0; j < 3; j++) {
+        	output[i] += vector[j]*matrix[i][j];
+        }
+    }
+    return output;
+}
+
+</script>
+</body>
