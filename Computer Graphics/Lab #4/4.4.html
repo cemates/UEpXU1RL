@@ -1,0 +1,216 @@
+<style>
+  body {
+    background-color: #ccc;
+  }
+
+</style>
+<script src="//cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.7/p5.js"></script>
+
+<body>
+  <script type="text/javascript">
+    var imgA;
+    var imgB;
+
+    function setup() {
+      createCanvas(512, 512);
+      background(255);
+
+      imgA = createImage(512, 512);
+      imgB = createImage(512, 512);
+      imgA.loadPixels();
+      imgB.loadPixels();
+      var d = pixelDensity();
+      for (var i = 0; i < 512 * 512 * 4 * d; i += 4) {
+        imgA.pixels[i] = 240;
+        imgA.pixels[i + 1] = 250;
+        imgA.pixels[i + 2] = 240;
+        imgA.pixels[i + 3] = 255;
+        imgB.pixels[i] = 240;
+        imgB.pixels[i + 1] = 240;
+        imgB.pixels[i + 2] = 250;
+        imgB.pixels[i + 3] = 255;
+      }
+      imgA.updatePixels();
+      imgB.updatePixels();
+
+      console.log("identity:");
+      showMatrix(makeIdentity(3, 5, 5));
+      console.log("translation:");
+      showMatrix(makeTranslation(3, 5, 5));
+      console.log("scaling:");
+      showMatrix(makeScale(3, 5, 5));
+      console.log("rotation:");
+      showMatrix(makeRotation(3, 5));
+      console.log("shear:");
+      showMatrix(makeShear(3, 5, 5));
+      console.log("multiply regular:");
+      showMatrix(multiply(makeShear(3, 5, 5), makeScale(3, 5, 5)));
+      console.log("vector:");
+      tv = testVector(3);
+      showMatrix(tv);
+      console.log("multiply by vector:");
+      showMatrix(multiply(makeShear(3, 5, 5), tv));
+      console.log("multiply many:");
+      showMatrix(multiplyByMany([
+        makeShear(3, 5, 5),
+        makeScale(3, 5, 5)
+      ], tv));
+    }
+
+    function testVector(size) {
+      let matrix = [];
+      for (let i = 0; i < size; i++) {
+        let temp = [1];
+        temp[0] = 2 + i;
+        matrix.push(temp);
+      }
+      return matrix;
+    }
+
+    function draw() {
+      if (!keyIsDown(32)) {
+        image(imgA, 0, 0);
+        text('Image A', 10, 20);
+      } else {
+        image(imgB, 0, 0);
+        text('Image B', 10, 20);
+      }
+    }
+
+    function showMatrix(m) {
+      for (let i = 0; i < m.length; i++) {
+        let str = "";
+        for (let j = 0; j < m[0].length; j++) {
+          str += m[i][j] + " ";
+        }
+        console.log(str);
+      }
+    }
+
+    function makeIdentity(n) {
+      let matrix = [];
+      for (let i = 0; i < n; i++) {
+        let temp = [n];
+        for (let j = 0; j < n; j++) {
+          if (i == j) {
+            temp[j] = 1;
+          } else {
+            temp[j] = 0;
+          }
+        }
+        matrix.push(temp);
+      }
+      return matrix;
+    }
+
+    function makeScale(n, sx, sy) {
+      m = makeIdentity(n);
+      m[0][0] = sx;
+      m[1][1] = sy;
+      return m;
+    }
+
+    function makeTranslation(n, tx, ty) {
+      m = makeIdentity(n);
+      m[0][n - 1] = tx;
+      m[1][n - 1] = ty;
+      return m;
+    }
+
+    function makeRotation(n, r) {
+      m = makeIdentity(n);
+      r = r / 180. * Math.PI;
+      m[0][0] = Math.cos(r);
+      m[1][0] = Math.sin(r);
+      m[0][1] = -1 * Math.sin(r);
+      m[1][1] = Math.cos(r);
+      return m;
+    }
+
+    function makeShear(n, shx, shy) {
+      m = makeIdentity(n);
+      m[0][1] = shx;
+      m[1][0] = shy;
+      return m;
+    }
+
+    function makeVector(x, y) {
+      return [x, y, 1];
+    }
+
+    function drawVector(img, vec) {
+      img.set(vec[0], vec[1], 0);
+      img.updatePixels();
+    }
+
+    function multiplyByMany(matrixArr, vector) {
+      result = matrixArr[0];
+      for (let i = 1; i < matrixArr.length; i++) {
+        result = multiply(result, matrixArr[i]);
+      }
+      return multiply(result, vector);
+    }
+
+    function mouseDragged() {
+      var vec = makeVector(mouseX, mouseY);
+
+      // shift + rotation + scaling
+      var shifted1 = multiply(makeTranslation(3, 10, 10), makeIdentity(3));
+      var rotated1 = multiply(shifted1, makeIdentity(shifted1.length));
+      var scaled1 = multiply(rotated1, makeIdentity(rotated1.length));
+      var res = multiplyByVector(scaled1, vec);
+      drawVector(imgA, res);
+
+      var scaled2 = multiply(makeScale(3, 2, 2), makeIdentity(3));
+      var rotated2 = multiply(scaled2, makeIdentity(scaled2.length));
+      var shifted2 = multiply(rotated2, makeIdentity(rotated2.length));
+      var res2 = multiplyByVector(shifted2, vec);
+      drawVector(imgB, res2);
+    }
+
+    /* function mouseDragged() {
+      vec = makeVector(mouseX, mouseY);
+      drawVector(imgA, vec);
+      imgA.updatePixels();
+      
+      drawVector(imgB, multiply(makeScale(3,5,5), vec));
+    } */
+
+    function multiplyByVector(M, v) {
+      var w = [0, 0, 0];
+      for (var i = 0; i < M.length; i++) {
+        for (var j = 0; j < M[i].length; j++) {
+          w[i] += M[i][j] * v[j];
+        }
+      }
+      return w;
+    }
+
+    function multiply(m1, m2) {
+      if (m1[0].length != m2.length) {
+        console.log("spoiled");
+        return [];
+      }
+
+      let size = m1.length;
+      let result = new Array(size);
+
+      for (let i = 0; i < result.length; i++) {
+        result[i] = new Array(m2[0].length);
+        for (let j = 0; j < m2[0].length; j++) {
+          result[i][j] = 0;
+        }
+      }
+
+      for (let rc = 0; rc < m2[0].length; rc++) {
+        for (let r = 0; r < m1.length; r++) {
+          for (let c = 0; c < m1[0].length; c++) {
+            result[r][rc] += m1[r][c] * m2[c][rc];
+          }
+        }
+      }
+      return result;
+    }
+
+  </script>
+</body>
