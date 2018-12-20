@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+        .grid-item1 {
+            grid-area: cels;
+            background: tan;
+        }
+        .grid-item2 {
+            grid-area: fahr;
+            background: tan;
+        }
+        .grid-item3 {
+            grid-area: kelvin;
+            background: tan;
+        }
+        .grid-item4 {
+            grid-area: km;
+            background: tan;
+        }
+        .grid-item5 {
+            grid-area: mile;
+            background: tan;
+        }
+        input[type=number] {
+            width: 60%;
+            padding: 10px;
+            background: wheat;
+        }
+        label {
+            font-size: 2em;
+        }
+        .grid-container {
+            position: absolute;
+            text-align: center;
+            justify-content: center; 
+            top: 50%;
+            left: 25%;
+            margin-left: -160px;
+            margin-top: -160px;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            user-select: none;
+            grid-gap: 20px;
+            display: grid;
+            grid-template-areas: 'km km km mile mile mile' 'cels cels fahr fahr kelvin kelvin';
+             
+        }
+        .grid-container > div {
+            border: 2px solid black;
+        }
+        
+    </style>
+    <script src="dist/bundle.js"></script>
+    <meta charset="UTF-8">
+    <title>TIN10 -s13869</title>
+</head>
+<body>
+    <div class="grid-container">
+        <div class="grid-item1">
+                <label for="cels">Celsius</label>
+                <input type="number" id="celsius" placeholder="Celius">
+        </div>
+        <div class="grid-item2">
+                <label for="fahr">Fahrenheit</label>
+                <input type="number" id="fahr" placeholder="Fahrenheit">
+        </div>
+        <div class="grid-item3">
+                <label for="kelvin">Kelvin</label>
+                <input type="number" id="kelvin" placeholder="Kelvin">
+        </div>
+        <div class="grid-item4">
+                <label for="km">Kilometer</label>
+                <input type="number" id="km" placeholder="Kilometer">
+        </div>
+        <div class="grid-item5">
+                <label for="mile">Mile</label>
+                <input type="number" id="mile" placeholder="Mile">
+        </div>
+    </div>
+</body>
+</html>
